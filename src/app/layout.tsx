@@ -21,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} antialiased`}>
-        {/* Monetag Script flyttet til toppen av BODY for bedre kompatibilitet */}
-        <Script 
-          src="https://quge5.com/88/tag.min.js" 
-          data-zone="197149" 
-          data-cfasync="false" 
-          strategy="afterInteractive" // Dette gjør at siden din laster lynraskt først
-        />
+        {/* Nytt Monetag Script-oppsett */}
+        <Script id="monetag-ad-tag" strategy="afterInteractive">
+          {`
+            (function(s){
+              s.dataset.zone='10391142';
+              s.src='https://al5sm.com/tag.min.js';
+            })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+          `}
+        </Script>
         
         {children}
       </body>
