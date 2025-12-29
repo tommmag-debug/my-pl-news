@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import Script from "next/script"; // Viktig import for annonser
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,17 +20,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* Dette er koden din fra Monetag, lagt inn rett etter head-tag åpning */}
+      <body className={`${geistSans.variable} antialiased`}>
+        {/* Monetag Script flyttet til toppen av BODY for bedre kompatibilitet */}
         <Script 
           src="https://quge5.com/88/tag.min.js" 
           data-zone="197149" 
-          async 
           data-cfasync="false" 
-          strategy="afterInteractive"
+          strategy="afterInteractive" // Dette gjør at siden din laster lynraskt først
         />
-      </head>
-      <body className={`${geistSans.variable} antialiased`}>
+        
         {children}
       </body>
     </html>
