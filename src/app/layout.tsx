@@ -20,17 +20,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Nytt Monetag Script med sone 10391161 */}
+        <Script 
+          src="https://3nbf4.com/act/files/tag.min.js?z=10391161" 
+          data-cfasync="false" 
+          async 
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={`${geistSans.variable} antialiased`}>
-        {/* Nytt Monetag Script-oppsett */}
-        <Script id="monetag-ad-tag" strategy="afterInteractive">
-          {`
-            (function(s){
-              s.dataset.zone='10391142';
-              s.src='https://al5sm.com/tag.min.js';
-            })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
-          `}
-        </Script>
-        
         {children}
       </body>
     </html>
