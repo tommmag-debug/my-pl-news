@@ -66,5 +66,67 @@ export default async function Page() {
 
   return (
     <div className="min-h-screen bg-[#f0f2f5] flex flex-col md:flex-row">
-      {/* SIDEBAR */}
-      <aside className="w-full md:w-16 bg-[#3d195b] flex md:flex-col gap-1 overflow
+      <aside className="w-full md:w-16 bg-[#3d195b] flex md:flex-col gap-1 overflow-x-auto md:overflow-y-auto sticky top-0 h-auto md:h-screen z-[60] p-1 shadow-xl">
+        {CLUBS.map((club) => (
+          <Link key={club.id} href={`/team/${club.id}`} className="flex-shrink-0 w-10 h-10 p-2 hover:bg-[#57287c] rounded transition-all group">
+            <img src={club.logo} alt={club.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+          </Link>
+        ))}
+      </aside>
+
+      <div className="flex-1 flex flex-col">
+        <header className="sticky top-0 z-50 bg-[#3d195b] text-white p-4 md:px-10 flex items-center justify-between shadow-lg backdrop-blur-md bg-opacity-95">
+          <div className="flex items-center gap-4">
+            <img src="https://resources.premierleague.com/premierleague/badges/rb/t3.svg" alt="PL" className="w-8 h-8 brightness-0 invert" />
+            <h1 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter">Latest PL News</h1>
+          </div>
+        </header>
+
+        <div className="flex flex-col lg:flex-row gap-8 p-6 lg:p-10 max-w-[1500px] mx-auto w-full">
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {articles.map((item, i) => (
+              <article key={i} className="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 pt-8 pb-14 hover:border-[#3d195b] hover:shadow-xl transition-all duration-200 group flex flex-col">
+                <h2 className="text-xl font-extrabold text-gray-900 leading-tight mb-4 group-hover:text-[#3d195b] transition-colors line-clamp-2">
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+                </h2>
+                <p className="text-gray-500 text-sm line-clamp-3 mb-6 group-hover:text-blue-600 transition-colors">
+                  {item.contentSnippet || item.content?.replace(/<[^>]*>?/gm, '')}
+                </p>
+                <div className="absolute bottom-4 left-6 text-[9px] font-bold text-gray-400 uppercase">
+                  {item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-GB') : ''}
+                </div>
+                <div className="absolute bottom-4 right-6 text-[10px] font-black bg-gray-100 text-[#3d195b] px-2 py-1 rounded uppercase group-hover:bg-[#00ff87] transition-colors">
+                  {item.sourceName}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <aside className="w-full lg:w-80">
+            <div className="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden text-xs font-bold">
+              <div className="bg-[#3d195b] text-white px-4 py-3 font-black italic border-b border-[#00ff87]/20 flex justify-between uppercase tracking-tighter">
+                Live Table <span className="text-[#00ff87]">24/25</span>
+              </div>
+              <table className="w-full">
+                <tbody className="divide-y divide-gray-100">
+                  {standings.length > 0 ? standings.map((t: any) => (
+                    <tr key={t.rank} className="hover:bg-gray-50 transition-colors">
+                      <td className="pl-4 py-2.5 text-gray-400 w-6">{t.rank}</td>
+                      <td className="py-2.5 flex items-center gap-2 text-gray-800 font-bold uppercase">
+                        <img src={t.logo} className="w-4 h-4 object-contain" alt=""/>
+                        <span className="truncate max-w-[120px]">{t.team}</span>
+                      </td>
+                      <td className="pr-4 py-2.5 text-right font-black text-[#3d195b]">{t.points}</td>
+                    </tr>
+                  )) : (
+                    <tr><td className="p-10 text-center text-gray-400 italic">Updating standings...</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
+}
